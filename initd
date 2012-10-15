@@ -36,7 +36,7 @@ EVALEXIT="(progn (setq kill-emacs-hook nil) (kill-emacs))"
 # Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
 . /lib/lsb/init-functions
 
-function do_install_me()
+do_install_me()
 {
     cat <<EOF > $USERHOME/.emacs.el
 ;;; init file
