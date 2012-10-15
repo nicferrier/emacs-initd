@@ -1,0 +1,28 @@
+An init.d script for starting Emacs as a daemon.
+
+You can install this, as root, in init.d to start and stop an Emacs
+daemon at box boot.
+
+It supports the usual start/stop but also:
+
+* {{{status}}} reports the current status of the emacs daemon instance
+* {{{eval}}} evaluates lisp, for example:
+
+{{{
+$ /etc/init.d/emacs eval '(emacs-uptime)'
+1 hour, 47 minutes, 26 seconds
+}}}
+
+* {{{command}}} evaluates a command, just simpler function calling:
+
+{{{
+$ /etc/init.d/emacs command 'elnode-start 8001 "localhost"'
+}}}
+
+* {{{install}}} installs a package, optionally from the specified archive:
+
+
+{{{
+$ /etc/init.d/emacs install elnode /vagrant/my-elpa
+}}}
+
