@@ -38,7 +38,7 @@ EVALEXIT="(progn (setq kill-emacs-hook nil) (kill-emacs))"
 
 do_install_me()
 {
-    cat <<EOF > $USERHOME/.emacs.el
+    cat <<EOF | sudo -u $USERNAME tee -a $USERHOME/.emacs.el
 ;;; init file
 
 ;; Probably need to add the local file archive
@@ -52,9 +52,11 @@ do_install_me()
   (let ((package-archives
          (cons (cons "archive" archive)
                package-archives)))
+    (package-refresh-contents)
     (package-install (if (stringp package)
                          (intern package)
-                         package))))
+                         package)))
+  (package-refresh-contents))
 ;; End
 EOF
 }
@@ -154,7 +156,7 @@ do_install() {
     [ $? -ne 0 ] && return 1
     if [ "$2" != "" ]
     then
-        $EMACSCLIENT -e "(package-let \"$1\" (quote $2))"
+        $EMACSCLIENT -e "(package-let (quote $1) \"$2\")"
     else
         $EMACSCLIENT -e "(package-install (quote $1))"
     fi
